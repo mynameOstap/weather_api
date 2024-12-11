@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "OXT/4bMO3S9X0of/UrenrfUXrYzmpqKAU91S+y6Fo9k=",
+  "Source": "weather_s",
+  "BasePath": "_content/weather_s",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
