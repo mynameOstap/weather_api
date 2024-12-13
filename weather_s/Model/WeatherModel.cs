@@ -1,4 +1,9 @@
-﻿namespace Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+
+namespace Model
 {
     public class WeatherModel
     {
@@ -18,12 +23,20 @@
     {
         public string description { get; set; }
     }
-
-    public class WeatherResult
+    [Table("Weather")] public class WeatherResult
     {
-        public string City { get; set;}
-        public float Temp { get; set;}
-        public string Description { get; set;}
+        [Key]
+        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [JsonIgnore]
+        public int Id { get; set; }
+        [Column("City")]  public string City { get; set;}
+        [Column("Temp")] public float Temp { get; set;}
+        [Column("Description")] public string Description { get; set;}
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public DateTime Inserted { get; set; }
     }
 }
+
+
 

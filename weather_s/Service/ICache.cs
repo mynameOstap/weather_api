@@ -1,8 +1,10 @@
-﻿namespace Service
+﻿using Model;
+
+namespace Service
 {
     public interface ICache
     {
-         Task<string> GetJsonResponseAsync(string city);
+         Task<WeatherResult> GetJsonResponseAsync(string city);
     }
 }
 

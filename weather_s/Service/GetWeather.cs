@@ -7,7 +7,7 @@
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=API_KEY";
+                string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=23ccc7f23bbc8f2fdeb7d107e8077b5c";
                
                 HttpResponseMessage response = await client.GetAsync(url);
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -17,3 +17,4 @@
         }
     }
 }
+

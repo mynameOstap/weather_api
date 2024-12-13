@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Data;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Model;
 
 namespace controller
@@ -20,25 +23,13 @@ namespace controller
         public async Task<ActionResult<WeatherResult>> Get(string city)
         {
           
-            var responseBody = await _cachedResponseService.GetJsonResponseAsync(city);
-            var weatherData = JsonSerializer.Deserialize<WeatherModel>(responseBody);
+            var data = await _cachedResponseService.GetJsonResponseAsync(city);
               
-                if (weatherData == null)
-                {
-                    return BadRequest("Не вдалося отримати дані про погоду. Можливо, структура відповіді змінилася.");
-                }
-
-                if (weatherData.main == null || weatherData.weather == null || weatherData.weather.Length == 0)
-                {
-                    return BadRequest("Не вдалося отримати інформацію про температуру або погоду.");
-                }
-
-                var data = new WeatherResult
-                {
-                    City = weatherData.name,
-                    Description = weatherData.weather[0].description,
-                    Temp = weatherData.main.temp
-                };
+            if (data == null)
+            {
+                return BadRequest("Не вдалося отримати дані про погоду.");
+            }
+                
 
                 return Ok(data);
 
@@ -46,6 +37,23 @@ namespace controller
            
         }
 
+    }
+    [ApiController]
+    [Route("/{controller}")]
+    public class WeatherDbController : ControllerBase
+    {
+        private readonly WeatherContext _context;
+
+        public WeatherDbController(WeatherContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet] public async Task<ActionResult<IEnumerable<WeatherResult>>> Get()
+        {
+            var dblast10 = await _context.WeatherResults.OrderBy(w => w.Inserted).Take(10).ToListAsync();
+            return Ok(dblast10);
+        }
     }
 }
 
